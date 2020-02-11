@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#08415c</color>
+    <color name="colorPrimaryDark">#003449</color>
+    <color name="textColorPrimary">#444</color>
+    <color name="textColorSecondary">#000</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000</color>
+    <color name="colorAccent">#CCF44336</color>
+
+    <color name="colorGreen">#68C542 </color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorWhiteTransparent">#63ffffff</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="colorBlue500">#2196F3</color>
+    <color name="colorBlueDark">#2c3e50</color>
+    <color name="colorHint">#dda6a2a2</color>
+    <color name="color777">#777</color>
+    <color name="colorAmber">#eba921</color>
+    <color name="colorTeal">#cc009688</color>
+    <color name="colorLightGrey">#37474F</color>
+
+    <color name="rippleColor">#FFFFFF</color>
+
+    <color name="test1">#2196F3</color>
+    <color name="test2">#EF5350</color>
+    <color name="colorOrange">#EF6C00</color>
+    <color name="text_color_black">#de000000</color>
+    
+    <color name="selected_city_color">#f57c00</color>
+    <color name="label_color">#37474f</color>
+
+    <color name="bb_bg_color">#fafafa</color>
+    <color name="colorYellowOpacity10">#19FFA726</color>
+    <color name="colorRed">#F44336</color>
+
+    <color name="green">#388e3c</color>
+    <color name="grey_bg">#eeeeee</color>
+    <color name="buttonBackgroundColor">#ffa726</color>
+
+
+</resources>
