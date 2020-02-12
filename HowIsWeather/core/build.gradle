@@ -54,7 +54,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
     
     // Crop library
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'

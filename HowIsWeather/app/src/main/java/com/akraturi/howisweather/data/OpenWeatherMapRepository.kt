@@ -10,12 +10,12 @@ class OpenWeatherMapRepository: WeatherDataSource() {
 
     override fun getCurrentWeather(lat: Double, long: Double, callback: CurrentWeatherCallback) {
         AppLogger.logCurrentMethodName(TAG)
-        CurrentWeatherDelegate(callback as CurrentWeatherDelegate.CurrentWeatherDelegateCallback).getWeather(lat,long)
+        CurrentWeatherDelegate(callback).getWeather(lat,long)
     }
 
     override fun getWeatherForecast(lat: Double, long: Double, callback: WeatherForecastCallback) {
         AppLogger.logCurrentMethodName(TAG)
-        WeatherForecastDelegate(callback as WeatherForecastDelegate.WeatherForecastDelegateCallback).getForecast(lat,long)
+        WeatherForecastDelegate(callback).getForecast(lat,long)
     }
 
 }

@@ -7,7 +7,7 @@ class AppLogger {
 
     companion object {
 
-        private val TAG = "PW-"
+        private val TAG = "AK-"
 
         fun init() {
             if (BuildConfig.DEBUG) {

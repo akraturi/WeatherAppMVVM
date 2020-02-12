@@ -9,7 +9,7 @@ import com.akraturi.howisweather.utils.Endpoints
 import com.parviom.pwnetwork.delegates.BaseApiCallDelegate
 import utils.AppLogger
 
-class CurrentWeatherDelegate(private val mCallback:CurrentWeatherDelegateCallback):BaseApiCallDelegate<CurrentWeatherResponse>(CurrentWeatherResponse::class.java) {
+class CurrentWeatherDelegate(private val mCallback:CurrentWeatherCallback):BaseApiCallDelegate<CurrentWeatherResponse>(CurrentWeatherResponse::class.java) {
 
     private val TAG = CurrentWeatherDelegate::class.java.simpleName
 
