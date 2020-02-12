@@ -6,7 +6,7 @@ import utils.AppLogger
 
 class PreferencesManager {
 
-    private val PREF_NAME = "com.parviom.pwcore.PREFERENCES_FILE_KEY"
+    private val PREF_NAME = "com.akraturi"
 
     private constructor(context: Context?){
         sharedPreferences = context!!.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
