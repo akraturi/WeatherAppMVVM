@@ -15,10 +15,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            buildConfigField "String", 'BASE_URL', project.debug_url
+            buildConfigField "String", 'API_KEY', project.api_key_debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", 'BASE_URL', project.release_url
+            buildConfigField "String", 'API_KEY', project.api_key_release
         }
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 

@@ -18,7 +18,7 @@ class MyApplication: Application() {
 
     private fun initApp(){
         AppLogger.logCurrentMethodName(TAG)
-        mApiManager = APIManager.getInstance("", mapOf())
+        mApiManager = APIManager.getInstance(BuildConfig.BASE_URL, mapOf())
     }
 
     companion object{
