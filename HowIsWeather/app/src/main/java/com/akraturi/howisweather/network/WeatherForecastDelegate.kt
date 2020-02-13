@@ -25,7 +25,8 @@ class WeatherForecastDelegate(private val mCallback:WeatherForecastCallback):Bas
 
         AppLogger.logCurrentMethodName(TAG)
 
-        mCallback.onWeatherForecast(responseObject.forecast)
+        val  list = ArrayList<Weather>()
+        mCallback.onWeatherForecast(list)
 
     }
 
