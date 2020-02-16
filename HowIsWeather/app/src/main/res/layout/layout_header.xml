@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="weather" type="com.akraturi.howisweather.data.models.Weather"/>
+        <variable name="utils" type="com.akraturi.howisweather.utils.OpenWeatherMapApiUtils"/>
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_margin="8dp"
+    android:layout_height="70dp">
+
+    <TextView
+        android:id="@+id/tvTempHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{weather.temp+` °C`}"
+        android:gravity="center"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/llLocation"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/tvTempHeader"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{weather.location}"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="start"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/tvDayTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{weather.day+`,`+weather.time}"
+            android:layout_gravity="start"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivWeatherHeader"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_centerVertical="true"
+        android:src="@{utils.getWeatherIconDrawable(context,weather.condition)}"
+        />
+
+
+</RelativeLayout>
+</layout>

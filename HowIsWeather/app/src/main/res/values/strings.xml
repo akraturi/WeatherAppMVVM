@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HowIsWeather</string>
+    <string name="monday">Monday</string>
+    <string name="degree_celsius">°C</string>
+    <string name="failed_to_fetch_weather_details">Failed to fetch weather details</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -2,7 +2,6 @@ package com.akraturi.howisweather.network
 
 import com.akraturi.howisweather.MyApplication
 import com.akraturi.howisweather.data.CurrentWeatherCallback
-import com.akraturi.howisweather.data.models.Weather
 import com.akraturi.howisweather.network.models.CurrentWeatherResponse
 import com.akraturi.howisweather.network.models.LocationQuery
 import com.akraturi.howisweather.utils.Endpoints
@@ -21,7 +20,7 @@ class CurrentWeatherDelegate(private val mCallback:CurrentWeatherCallback):BaseA
 
     override fun onSuccess(responseObject: CurrentWeatherResponse) {
         AppLogger.logCurrentMethodName(TAG)
-        mCallback.onCurrentWeather(Weather(1))
+        mCallback.onCurrentWeather(responseObject.toWeather())
     }
 
     override fun onFailure(errorMessage: String, status: Int) {

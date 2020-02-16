@@ -37,7 +37,7 @@ class WeatherViewmodel(private val mDataSource: @NotNull WeatherDataSource,
 
         AppLogger.logCurrentMethodName(TAG)
 
-        startLoading()
+        //startLoading()
 
         mDataSource.getWeatherForecast(lat,long,this)
     }
@@ -64,7 +64,7 @@ class WeatherViewmodel(private val mDataSource: @NotNull WeatherDataSource,
 
         AppLogger.logCurrentMethodName(TAG)
 
-        stopLoading()
+        //stopLoading()
 
         updateLiveData(forecast,mWeatherForecastLiveData)
     }
@@ -73,7 +73,7 @@ class WeatherViewmodel(private val mDataSource: @NotNull WeatherDataSource,
 
         AppLogger.logCurrentMethodName(TAG)
 
-        stopLoading()
+        //stopLoading()
 
         updateLiveDataWithError(error,mWeatherForecastLiveData)
     }

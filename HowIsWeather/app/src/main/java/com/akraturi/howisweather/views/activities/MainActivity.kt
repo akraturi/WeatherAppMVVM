@@ -21,8 +21,10 @@ import ui.observers.ApiObserver
 import utils.AppLogger
 import utils.fullScreenMode
 import utils.showMessageDialog
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
-
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.akraturi.howisweather.utils.OpenWeatherMapApiUtils
+import com.akraturi.howisweather.views.adapters.WeatherForecastListAdapter
+import ui.observers.LoadingObserver
 
 
 class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
@@ -30,19 +32,16 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
     private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var airLocation: AirLocation
-
     private lateinit var mBinding:ActivityMainBinding
-
     private lateinit var mViewModel:WeatherViewmodel
+    private lateinit var mAdapter:WeatherForecastListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         AppLogger.logCurrentMethodName(TAG)
-
         fullScreenMode()
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-
         setup()
     }
 
@@ -50,26 +49,38 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
 
         override fun onSuccess(data: Weather) {
             AppLogger.logCurrentMethodName(TAG)
-//            mBinding.tvHello.text = "Current Weather"
+            updateUI(data)
         }
 
         override fun onFailure(errorMessage: String) {
             AppLogger.logCurrentMethodName(TAG)
-//            mBinding.tvHello.text = "Failed current weather"
+            showRetry()
         }
 
     }
 
-    private val weatherForecastObserver = object:ApiObserver<List<Weather>>(){
-
+    private val weatherForecastObserver = object: ApiObserver<List<Weather>>() {
         override fun onSuccess(data: List<Weather>) {
             AppLogger.logCurrentMethodName(TAG)
-//            mBinding.tvHello.text = "Weather Forecast"
+            mAdapter.updateData(data)
         }
 
         override fun onFailure(errorMessage: String) {
             AppLogger.logCurrentMethodName(TAG)
-//            mBinding.tvHello.text = "Weather Forecast failure"
+            showRetry()
+        }
+
+    }
+
+    private val loadingObserver = object: LoadingObserver() {
+        override fun onLoadingStarted() {
+            AppLogger.logCurrentMethodName(TAG)
+            showProgressBar()
+        }
+
+        override fun onLoadingStoped() {
+            AppLogger.logCurrentMethodName(TAG)
+            hideProgressBar()
         }
 
     }
@@ -87,13 +98,21 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
             WeatherViewmodel::class.java)
         mViewModel.weather.observe(this,currentWeatherObserver)
         mViewModel.weatherForecast.observe(this,weatherForecastObserver)
+        mViewModel.loadingLiveData.observe(this,loadingObserver)
+        setupViews()
 
+    }
+
+    private fun setupViews(){
+        mBinding.bottomSheet.rvForecast.layoutManager = LinearLayoutManager(this)
+        mAdapter = WeatherForecastListAdapter(this, mutableListOf())
+        mBinding.bottomSheet.rvForecast.adapter = mAdapter
+        mBinding.btnRetry.setOnClickListener { getWeather() }
     }
 
     private fun setupBottomSheet(){
         AppLogger.logCurrentMethodName(TAG)
         val bottomSheetBehavior = BottomSheetBehavior.from(mBinding.bottomSheet.bottomSheet)
-
 
         bottomSheetBehavior.addBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -105,10 +124,12 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
                     BottomSheetBehavior.STATE_HIDDEN -> {
                     }
                     BottomSheetBehavior.STATE_EXPANDED -> {
-                        mBinding.contentMain.btnBottomSheet.setText("Close Sheet")
+                        mBinding.header.tvTempHeader.visibility = View.VISIBLE
+                        mBinding.contentMain.rlContentMain.visibility = View.GONE
                     }
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        mBinding.contentMain.btnBottomSheet.setText("Expand Sheet")
+                        mBinding.header.tvTempHeader.visibility = View.GONE
+                        mBinding.contentMain.rlContentMain.visibility = View.VISIBLE
                     }
                     BottomSheetBehavior.STATE_DRAGGING -> {
                     }
@@ -118,20 +139,11 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
                 }
             }
         })
-
-        mBinding.bottomSheet.bottomSheet.setOnClickListener {
-            if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                mBinding.contentMain.btnBottomSheet.setText("Close sheet");
-            } else {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                mBinding.contentMain.btnBottomSheet.setText("Expand sheet");
-            }
-        }
     }
 
     private fun getUserLocation(){
         AppLogger.logCurrentMethodName(TAG)
+        showProgressBar()
         airLocation = AirLocation(this,true,true,this)
     }
 
@@ -144,9 +156,9 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
 
     override fun onSuccess(location: Location) {
         AppLogger.logCurrentMethodName(TAG)
+        hideProgressBar()
         UserLocationPreferences.saveUserLatLng(this,location.latitude,location.longitude)
-        mViewModel.getCurrentWeather(location.latitude,location.longitude)
-        mViewModel.getWeatherForecast(location.latitude,location.longitude)
+        getWeather()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -161,7 +173,36 @@ class MainActivity : AppCompatActivity(),AirLocation.Callbacks{
         airLocation.onRequestPermissionsResult(requestCode,permissions,grantResults)
     }
 
-    private fun showRetry(){
+    private fun getWeather(){
+        AppLogger.logCurrentMethodName(TAG)
+        hideRetry()
+        val latLng = UserLocationPreferences.getUserLatLng(this)
+        mViewModel.getCurrentWeather(latLng.first,latLng.second)
+        mViewModel.getWeatherForecast(latLng.first,latLng.second)
+    }
 
+    private fun showRetry(){
+         mBinding.rootView.visibility = View.GONE
+         mBinding.llRetry.visibility = View.VISIBLE
+    }
+
+    private fun hideRetry(){
+       mBinding.llRetry.visibility = View.GONE
+       mBinding.rootView.visibility = View.VISIBLE
+    }
+
+    private fun updateUI(weather:Weather){
+         mBinding.weather = weather
+         mBinding.utils = OpenWeatherMapApiUtils
+    }
+
+    private fun showProgressBar(){
+        mBinding.progressBar.visibility = View.VISIBLE
+        mBinding.rootView.visibility = View.GONE
+    }
+
+    private fun hideProgressBar(){
+        mBinding.progressBar.visibility = View.GONE
+        mBinding.rootView.visibility = View.VISIBLE
     }
 }

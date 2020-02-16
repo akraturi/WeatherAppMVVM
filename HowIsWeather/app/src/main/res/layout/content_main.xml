@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+      <data>
+          <variable name="weather" type="com.akraturi.howisweather.data.models.Weather"/>
+          <variable name="utils" type="com.akraturi.howisweather.utils.OpenWeatherMapApiUtils"/>
+      </data>
+
+<RelativeLayout
+              android:id="@+id/rlContentMain"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context="info.androidhive.bottomsheet.MainActivity"
-              tools:showIn="@layout/activity_main">
+              android:orientation="vertical">
 
-    <Button
-            android:id="@+id/btn_bottom_sheet"
+
+         <TextView
+                   android:id="@+id/tvWeatherDescription"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@{weather.description}"
+                   android:textSize="24sp"
+                   android:layout_below="@id/tvTemp"
+                   android:layout_centerInParent="true"
+                   android:textColor="#FFFFFF"
+                   />
+
+          <TextView
+                  android:id="@+id/tvTemp"
+                  android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@{weather.temp}"
+                  android:layout_centerInParent="true"
+              android:textSize="48sp"
+              android:textColor="#FFFFFF"
+          />
+
+       <TextView
             android:layout_width="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:text="Show Bottom Sheet" />
+            android:text="@string/degree_celsius"
+            android:layout_centerInParent="true"
+            android:textSize="24sp"
+            android:layout_toRightOf="@id/tvTemp"
+            android:textColor="#FFFFFF"
+       />
 
-    <Button
-            android:id="@+id/btn_bottom_sheet_dialog"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:text="Show Bottom Sheet Dialog" />
 
-    <Button
-            android:id="@+id/btn_bottom_sheet_dialog_fragment"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:layout_height="wrap_content"
-            android:text="Show Bottom Sheet Dialog Fragment" />
-
-</LinearLayout>
+</RelativeLayout>
 </layout>

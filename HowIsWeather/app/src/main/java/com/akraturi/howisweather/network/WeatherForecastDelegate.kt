@@ -2,7 +2,6 @@ package com.akraturi.howisweather.network
 
 import com.akraturi.howisweather.MyApplication
 import com.akraturi.howisweather.data.WeatherForecastCallback
-import com.akraturi.howisweather.data.models.Weather
 import com.akraturi.howisweather.network.models.LocationQuery
 import com.akraturi.howisweather.network.models.WeatherForecastResponse
 import com.akraturi.howisweather.utils.Endpoints
@@ -25,8 +24,7 @@ class WeatherForecastDelegate(private val mCallback:WeatherForecastCallback):Bas
 
         AppLogger.logCurrentMethodName(TAG)
 
-        val  list = ArrayList<Weather>()
-        mCallback.onWeatherForecast(list)
+        mCallback.onWeatherForecast(responseObject.toWeatherList())
 
     }
 

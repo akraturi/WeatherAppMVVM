@@ -1,76 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/bottom_sheet"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#fff"
-              android:orientation="vertical"
-              android:padding="4dp"
-              app:behavior_hideable="true"
-              app:behavior_peekHeight="56dp"
-              app:layout_behavior="@string/bottom_sheet_behavior">
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/bottom_sheet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="90dp"
+    style="@style/BottomSheetTheme"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            android:background="@android:color/white">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical"
-            android:weightSum="3">
+            android:orientation="vertical">
 
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_weight="2"
-                android:text="Order Details"
-                android:textColor="#444"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+    <View
+            android:layout_gravity="center"
+            android:layout_width="25dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/darker_gray"
+            />
 
-        <TextView
-                android:layout_width="0dp"
-                android:gravity="right"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="₹435.00"/>
-    </LinearLayout>
-
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chicken Fried Rice 1x1" />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paneer Tikka 1x2" />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Delivery Address"
-            android:textColor="#444"
-            android:textStyle="bold" />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Flat No 404, Skyline Apartments, Vizag - 500576" />
-
-    <Button
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvForecast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="#000"
-            android:foreground="?attr/selectableItemBackground"
-            android:text="PROCEED PAYMENT"
-            android:textColor="#fff" />
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:listitem="@layout/weather_forecast_list_item"
+            tools:itemCount="10"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+    />
 
-</LinearLayout>
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.core.widget.NestedScrollView>
 </layout>
